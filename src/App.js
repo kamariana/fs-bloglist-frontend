@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Login from './components/Login'
 import blogService from './services/blogs'
 
 const App = () => {
@@ -11,9 +12,13 @@ const App = () => {
     )  
   }, [])
 
+
   return (
     <div>
       <h2>blogs</h2>
+
+      <Login />
+
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
