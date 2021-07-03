@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import loginService from '../services/login'
+import blogService from '../services/blogs'
 
 const Login = () => {
 
@@ -8,11 +9,26 @@ const Login = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
+  useEffect(() => {
+    const loggedInBlogAppUserJSON = window.localStorage.getItem('loggedInBlogAppUser')
+    if (loggedInBlogAppUserJSON) {
+      const user = JSON.parse(loggedInBlogAppUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
     try {
       const user  = await loginService.login({ username, password })
+
+      window.localStorage.setItem(
+        'loggedInBlogAppUser', JSON.stringify(user)
+      )
+
+      blogService.setToken(user.token)
       setUser(user)
 
       //reset the username and password
@@ -24,6 +40,10 @@ const Login = () => {
         setErrorMessage(null)
       }, 7000)
     }
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedInBlogAppUser')
   }
 
   const loginForm = () => (
@@ -55,6 +75,10 @@ const Login = () => {
   const loggedIn = () => (
     <div>
       <p>{user.name} logged-in</p>
+
+      <button onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   )
 
