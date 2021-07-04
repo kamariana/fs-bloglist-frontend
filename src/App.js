@@ -14,9 +14,8 @@ const App = () => {
 
 
   return (
-    <div>
-      <h2>blogs</h2>
-
+    <div>   
+      <h1>Blogs</h1>
       <Login blogs={blogs} setBlogs={setBlogs} />
 
       {blogs.map(blog =>

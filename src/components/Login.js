@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 
+import Success from './Notifications/Success';
+import Error from './Notifications/Error';
+
 const Login = ({ blogs, setBlogs }) => {
 
   const [username, setUsername] = useState('')
@@ -9,6 +12,7 @@ const Login = ({ blogs, setBlogs }) => {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     const loggedInBlogAppUserJSON = window.localStorage.getItem('loggedInBlogAppUser')
@@ -36,7 +40,7 @@ const Login = ({ blogs, setBlogs }) => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('Wrong username or password')
       setTimeout(() => {
         setErrorMessage(null)
       }, 7000)
@@ -69,21 +73,28 @@ const Login = ({ blogs, setBlogs }) => {
       .then(returnBlog => {
         setBlogs(blogs.concat(returnBlog))
         setNewBlog({ title: '', author: '', url: '' })
+        setSuccessMessage(
+          `a new blog ${title} by ${author}`
+        )
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 7000)
       })
       .catch(error => {
         console.log(error.response)
         setErrorMessage(
-          //`${error.response.data.error}`
+          `${error.response.data.error}`
         )
         setTimeout(() => {
           setErrorMessage(null);
-        }, 5000)
+        }, 7000)
       })
   }
 
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
+      <h3>Login to application</h3>
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -110,6 +121,7 @@ const Login = ({ blogs, setBlogs }) => {
 
   const newBlogForm = () => (
     <form onSubmit={createBlog}>
+      <h3>Create new </h3>
       <div>
         <label htmlFor="title">Title</label>
         <input
@@ -159,9 +171,8 @@ const Login = ({ blogs, setBlogs }) => {
 
   return (
     <>
-      <p>
-        {errorMessage}
-      </p> 
+      <Success message={successMessage} />
+      <Error message={errorMessage} />
       {
         user === null 
         ? loginForm()
