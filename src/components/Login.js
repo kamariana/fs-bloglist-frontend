@@ -49,6 +49,8 @@ const Login = ({ blogs, setBlogs }) => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedInBlogAppUser')
+    window.location.reload()
+    return false;
   }
 
   const handleBlogChange = (event) => {
