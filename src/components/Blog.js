@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, index, updateLikes }) => {
+const Blog = ({ blog, index, updateLikes, deleteBlog }) => {
   const [blogVisible, setBlogVisible] = useState(0)
   const isOpen = blogVisible === index
 
@@ -29,7 +29,7 @@ const Blog = ({ blog, index, updateLikes }) => {
         <button className="btn" onClick={updateLikes}>
           Like
         </button>
-        <button className="btn" >
+        <button className="btn" onClick={deleteBlog}>
           Delete
         </button>
         </div>

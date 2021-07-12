@@ -76,8 +76,8 @@ const App = () => {
     return false;
   }
 
-  const handleLikes = (id) => {
-    const blog = blogs.find(b => b.id === id)
+  const handleLikes = id => {
+    const blog = blogs.find((b) => b.id === id)
     const likes = blog.likes += 1;
     
     const blogObject = {
@@ -91,9 +91,30 @@ const App = () => {
     blogService
       .update(blog.id, blogObject)
       .then(returnBlog => {
-        setBlogs(blogs.map(b => b.id !== blog.id ? b : blog));
+        setBlogs(blogs.map((b) => b.id !== blog.id ? b : blog));
       })
   }
+
+  const handleDelete = id => {
+    const blog = blogs.find((b) => b.id === id)
+
+    if(window.confirm(`Remove ${blog.title} by ${blog.author}`)) {
+      blogService
+        .remove(id)
+        .then(returnBlog=> {
+          setBlogs(blog.filter((b) => b.id !== id));
+        })
+        .catch(error => {
+          setErrorMessage(
+            `Information of ${blog.title} has already been removed from server`
+          )
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 7000)
+          setBlogs(blog.filter((b) => b.id !== id));
+        })
+    }
+  } 
 
 
 
@@ -142,6 +163,7 @@ const App = () => {
   )
 
 
+
   const sortedBlogsByLikes = blogs.sort((a, b) => {
     return b.likes - a.likes
   })
@@ -167,7 +189,13 @@ const App = () => {
       }
   
       {sortedBlogsByLikes.map((blog, index) =>        
-        <Blog key={blog.id} blog={blog} index={index} updateLikes={() => handleLikes(blog.id)} />
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          index={index} 
+          updateLikes={() => handleLikes(blog.id)} 
+          deleteBlog={() => handleDelete(blog.id)} 
+          />
       )}
     </div>
   )
