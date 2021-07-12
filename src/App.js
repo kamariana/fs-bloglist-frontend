@@ -11,6 +11,7 @@ import loginService from './services/login'
 
 import Success from './components/Notifications/Success';
 import Error from './components/Notifications/Error';
+import { logDOM } from '@testing-library/react'
 
 
 const App = () => {
@@ -75,28 +76,23 @@ const App = () => {
     return false;
   }
 
-  const handleLikes = () => {
-    const blog = blogs.find(b => b.id)
-    let likes = blog.likes += 1;
-
+  const handleLikes = (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const likes = blog.likes += 1;
     
-    const blogObject = { 
+    const blogObject = {
       user: blog.user.id,
       likes: likes,
       author: blog.author,
       title: blog.title,
       url: blog.url 
-     }
-
-    console.log(blogObject)
+    }
 
     blogService
       .update(blog.id, blogObject)
       .then(returnBlog => {
-        setBlogs(blogs.map(b => b.id !== blog.id ? b : returnBlog));
+        setBlogs(blogs.map(b => b.id !== blog.id ? b : blog));
       })
-
-      console.log(blogs)
   }
 
 
@@ -168,7 +164,7 @@ const App = () => {
       }
   
       {blogs.map((blog, index) =>        
-        <Blog key={blog.id} blog={blog} index={index} handleLikes={handleLikes} />
+        <Blog key={blog.id} blog={blog} index={index} updateLikes={() => handleLikes(blog.id)} />
       )}
     </div>
   )

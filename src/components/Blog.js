@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, index, handleLikes }) => {
+const Blog = ({ blog, index, updateLikes }) => {
   const [blogVisible, setBlogVisible] = useState(0)
   const isOpen = blogVisible === index
 
@@ -26,7 +26,7 @@ const Blog = ({ blog, index, handleLikes }) => {
         Likes {blog.likes} <br />
         {blog.user.name}
         <div className="blog__footer">
-        <button className="btn" onClick={handleLikes}>
+        <button className="btn" onClick={updateLikes}>
           Like
         </button>
         <button className="btn" >
