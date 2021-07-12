@@ -26,4 +26,9 @@ const update = async (id, newObject) => {
   return response.data
 }
 
-export default { getAll, create, update, setToken }
+export default { 
+  getAll, 
+  create, 
+  update, 
+  setToken
+ }
