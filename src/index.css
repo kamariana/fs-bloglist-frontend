@@ -21,6 +21,14 @@ body {
     padding: 0.85rem;
 }
 
+.blog .close {
+    display: none;
+}
+
+.blog .open {
+    display: block;
+}
+
 .blog__summary {
     display: flex;
     justify-content: space-between;
@@ -36,10 +44,6 @@ body {
 .blog__sub-title {
     font-size: 1.1rem;
     color: #666;
-}
-
-.blog__content {
-
 }
 
 .blog__footer {

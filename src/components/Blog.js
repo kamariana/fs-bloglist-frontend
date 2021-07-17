@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, index, updateLikes, deleteBlog }) => {
-  const [blogVisible, setBlogVisible] = useState(0)
-  const isOpen = blogVisible === index
-
-  const btnLable = isOpen ? 'Hide' : 'View'
+const Blog = ({ blog, updateLikes, deleteBlog }) => {
+  const [blogVisible, setBlogVisible] = useState(false)
 
   return (
     <div className="blog">
@@ -17,14 +14,14 @@ const Blog = ({ blog, index, updateLikes, deleteBlog }) => {
             {blog.author}
           </span>
         </div>
-        <button className="btn" onClick={() => setBlogVisible(index)}>
-          {btnLable}
+        <button className="btn btn--show" onClick={() => setBlogVisible(!blogVisible)}>
+          {blogVisible ? 'Hide' : 'View'}
         </button>
       </div>
-      <div className="blog__content" style={{ display: isOpen ? 'block' : 'none' }}>
+      <div className={ blogVisible ? 'open' : 'close' }>
         {blog.url} <br />
         Likes {blog.likes} <br />
-        {blog.user.name}
+        {/* {blog.user.name} */}
         <div className="blog__footer">
           <button className="btn" onClick={updateLikes}>
           Like
