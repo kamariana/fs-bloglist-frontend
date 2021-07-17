@@ -44,3 +44,24 @@ test('checks that the details are shown when the button is click', () => {
 
   expect(button).toHaveTextContent('Hide')
 })
+
+test('ensures that if the like button is clicked twice, the event handler is also called twice', () => {
+  const blog = {
+    title: 'What we are living for',
+    author: 'A. Camariana',
+    url: 'camariana.gm',
+    likes:  10,
+  }
+
+  const mockHandler = jest.fn()
+
+  const component = render (
+    <Blog blog={blog} updateLikes={mockHandler} />
+  )
+
+  const button = component.getByText('Like')
+  fireEvent.click(button)
+  fireEvent.click(button)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})
