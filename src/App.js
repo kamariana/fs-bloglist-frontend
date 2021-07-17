@@ -103,15 +103,22 @@ const App = () => {
         .remove(id)
         .then(returnBlog=> {
           setBlogs(blog.filter((b) => b.id !== id));
+          setSuccessMessage(
+            `${blog.title} is deleted successfully`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 7000)
         })
         .catch(error => {
           setErrorMessage(
-            `Information of ${blog.title} has already been removed from server`
+            //`You do not have permission to delete ${blog.title}`
+            `${error}`
           )
           setTimeout(() => {
             setErrorMessage(null);
           }, 7000)
-          setBlogs(blog.filter((b) => b.id !== id));
+          //setBlogs(blog.filter(b => b.id !== id));
         })
     }
   } 
