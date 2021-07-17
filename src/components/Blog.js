@@ -5,10 +5,10 @@ const Blog = ({ blog, index, updateLikes, deleteBlog }) => {
   const isOpen = blogVisible === index
 
   const btnLable = isOpen ? 'Hide' : 'View'
-  
+
   return (
     <div className="blog">
-      <div className="blog__summary"> 
+      <div className="blog__summary">
         <div>
           <h2 className="blog__title">
             {blog.title}
@@ -26,15 +26,15 @@ const Blog = ({ blog, index, updateLikes, deleteBlog }) => {
         Likes {blog.likes} <br />
         {blog.user.name}
         <div className="blog__footer">
-        <button className="btn" onClick={updateLikes}>
+          <button className="btn" onClick={updateLikes}>
           Like
-        </button>
-        <button className="btn" onClick={deleteBlog}>
+          </button>
+          <button className="btn" onClick={deleteBlog}>
           Delete
-        </button>
+          </button>
         </div>
       </div>
-    </div>  
+    </div>
   )
 }
 

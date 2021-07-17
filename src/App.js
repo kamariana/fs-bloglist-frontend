@@ -9,16 +9,15 @@ import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-import Success from './components/Notifications/Success';
-import Error from './components/Notifications/Error';
-import { logDOM } from '@testing-library/react'
+import Success from './components/Notifications/Success'
+import Error from './components/Notifications/Error'
 
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  
+
   const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -31,8 +30,8 @@ const App = () => {
     blogService
       .getAll()
       .then(initialBlogs =>
-      setBlogs(initialBlogs)
-    )  
+        setBlogs(initialBlogs)
+      )
   }, [])
 
   useEffect(() => {
@@ -45,7 +44,7 @@ const App = () => {
   }, [])
 
 
-  
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -73,25 +72,25 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedInBlogAppUser')
     window.location.reload()
-    return false;
+    return false
   }
 
   const handleLikes = id => {
     const blog = blogs.find((b) => b.id === id)
-    const likes = blog.likes += 1;
-    
+    const likes = blog.likes += 1
+
     const blogObject = {
       user: blog.user.id,
       likes: likes,
       author: blog.author,
       title: blog.title,
-      url: blog.url 
+      url: blog.url
     }
 
     blogService
       .update(blog.id, blogObject)
       .then(returnBlog => {
-        setBlogs(blogs.map((b) => b.id !== blog.id ? b : blog));
+        setBlogs(blogs.map((b) => b.id !== blog.id ? b : blog))
       })
   }
 
@@ -101,13 +100,13 @@ const App = () => {
     if(window.confirm(`Remove ${blog.title} by ${blog.author}`)) {
       blogService
         .remove(id)
-        .then(returnBlog=> {
-          setBlogs(blog.filter((b) => b.id !== id));
+        .then(returnBlog => {
+          setBlogs(blog.filter((b) => b.id !== id))
           setSuccessMessage(
             `${blog.title} is deleted successfully`
           )
           setTimeout(() => {
-            setSuccessMessage(null);
+            setSuccessMessage(null)
           }, 7000)
         })
         .catch(error => {
@@ -116,12 +115,12 @@ const App = () => {
             `${error}`
           )
           setTimeout(() => {
-            setErrorMessage(null);
+            setErrorMessage(null)
           }, 7000)
           //setBlogs(blog.filter(b => b.id !== id));
         })
     }
-  } 
+  }
 
 
 
@@ -135,7 +134,7 @@ const App = () => {
           `a new blog ${blogObject.title} by ${blogObject.author}`
         )
         setTimeout(() => {
-          setSuccessMessage(null);
+          setSuccessMessage(null)
         }, 7000)
       })
       .catch(error => {
@@ -144,16 +143,16 @@ const App = () => {
           `${error.response.data.error}`
         )
         setTimeout(() => {
-          setErrorMessage(null);
+          setErrorMessage(null)
         }, 7000)
       })
   }
 
-  
+
 
   const loginForm = () => (
     <Togglable buttonLabel="Login">
-      <LoginForm 
+      <LoginForm
         username={username}
         password={password}
         handleUsernameChange={({ target }) => setUsername(target.value)}
@@ -176,7 +175,7 @@ const App = () => {
   })
 
   return (
-    <div className="blogs">   
+    <div className="blogs">
       <h1>Blogs</h1>
 
       <Success message={successMessage} />
@@ -194,15 +193,15 @@ const App = () => {
           {blogForm()}
         </div>
       }
-  
-      {sortedBlogsByLikes.map((blog, index) =>        
-        <Blog 
-          key={blog.id} 
-          blog={blog} 
-          index={index} 
-          updateLikes={() => handleLikes(blog.id)} 
-          deleteBlog={() => handleDelete(blog.id)} 
-          />
+
+      {sortedBlogsByLikes.map((blog, index) =>
+        <Blog
+          key={blog.id}
+          blog={blog}
+          index={index}
+          updateLikes={() => handleLikes(blog.id)}
+          deleteBlog={() => handleDelete(blog.id)}
+        />
       )}
     </div>
   )
