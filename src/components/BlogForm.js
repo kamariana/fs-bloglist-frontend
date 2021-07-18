@@ -25,40 +25,42 @@ const BlogForm = ({ createBlog }) => {
   }
 
   return (
-    <form onSubmit={addBlog}>
+    <div className="form">
       <h3>Create new </h3>
-      <div>
-        <label htmlFor="title">Title</label>
-        <input
-          id="title"
-          type="text"
-          value={newBlog.title}
-          name="title"
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="author">Author</label>
-        <input
-          id="author"
-          type="text"
-          value={newBlog.author}
-          name="author"
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="url">Url</label>
-        <input
-          id="url"
-          type="text"
-          value={newBlog.url}
-          name="url"
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit">Create</button>
-    </form>
+      <form onSubmit={addBlog}>
+        <div>
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            value={newBlog.title}
+            name="title"
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="author">Author</label>
+          <input
+            id="author"
+            type="text"
+            value={newBlog.author}
+            name="author"
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="url">Url</label>
+          <input
+            id="url"
+            type="text"
+            value={newBlog.url}
+            name="url"
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit">Create</button>
+      </form>
+    </div>
   )
 }
 

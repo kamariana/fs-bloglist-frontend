@@ -89,6 +89,7 @@ const App = () => {
 
     blogService
       .update(blog.id, blogObject)
+      // eslint-disable-next-line no-unused-vars
       .then(returnBlog => {
         setBlogs(blogs.map((b) => b.id !== blog.id ? b : blog))
       })
@@ -100,6 +101,7 @@ const App = () => {
     if(window.confirm(`Remove ${blog.title} by ${blog.author}`)) {
       blogService
         .remove(id)
+        // eslint-disable-next-line no-unused-vars
         .then(returnBlog => {
           setBlogs(blog.filter((b) => b.id !== id))
           setSuccessMessage(
