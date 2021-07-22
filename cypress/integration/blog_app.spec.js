@@ -51,6 +51,29 @@ describe('Blog app', function() {
         url: 'https://janeyang.org/2021/04/13/in-search-of-dignity-at-work/'
       })
     })
+
+    describe('a blog exists', function() {
+      beforeEach(function() {
+        cy.createBlog({
+          title: 'I am not your Yoko Ono', 
+          author: 'Jane Yang', 
+          url: 'https://janeyang.org/2021/04/13/in-search-of-dignity-at-work/'
+        })
+      })
+
+      it('can be liked', function() {
+        cy.contains('I am not your Yoko Ono')
+          .get('.btn--show')
+          .click()
+        
+        cy.contains('I am not your Yoko Ono')
+          .get('.btn--like')
+          .click()
+        
+        cy.get('.open')
+          .contains('Likes 1')
+      })
+    })
   })
   
 })
