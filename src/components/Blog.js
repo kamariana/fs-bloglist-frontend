@@ -23,7 +23,7 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
         Likes {blog.likes} <br />
         {/* {blog.user.name} */}
         <div className="blog__footer">
-          <button className="btn" onClick={updateLikes}>
+          <button className="btn btn--like" onClick={updateLikes}>
           Like
           </button>
           <button className="btn" onClick={deleteBlog}>

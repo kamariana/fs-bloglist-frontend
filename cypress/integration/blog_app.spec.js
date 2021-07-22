@@ -23,7 +23,7 @@ describe('Blog app', function() {
       })
     })
 
-    it.only('fails with wrong credentials', function() {
+    /* it.only('fails with wrong credentials', function() {
       cy.contains('Login').click()
       cy.get('#username').type('camariana')
       cy.get('#password').type('jannatas')
@@ -33,6 +33,23 @@ describe('Blog app', function() {
         .should('contain', 'Wrong username or password')
         .and('have.css', 'color', 'rgb(255, 0, 0)')
         .and('have.css', 'border-style', 'solid')
+    }) */
+  })
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.login({
+        username: 'camariana',
+        password: 'jannata'
+      })
+    })
+
+    it('A blog can be created', function() {
+      cy.createBlog({
+        title: 'I am not your Yoko Ono', 
+        author: 'Jane Yang', 
+        url: 'https://janeyang.org/2021/04/13/in-search-of-dignity-at-work/'
+      })
     })
   })
   
