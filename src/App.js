@@ -103,7 +103,7 @@ const App = () => {
         .remove(id)
         // eslint-disable-next-line no-unused-vars
         .then(returnBlog => {
-          setBlogs(blog.filter((b) => b.id !== id))
+          setBlogs(blogs.filter((b) => b.id !== id))
           setSuccessMessage(
             `${blog.title} is deleted successfully`
           )
@@ -111,15 +111,16 @@ const App = () => {
             setSuccessMessage(null)
           }, 7000)
         })
+        // eslint-disable-next-line no-unused-vars
         .catch(error => {
           setErrorMessage(
-            //`You do not have permission to delete ${blog.title}`
-            `${error}`
+            `You do not have permission to delete ${blog.title}`
+            //`${error}`
           )
           setTimeout(() => {
             setErrorMessage(null)
           }, 7000)
-          //setBlogs(blog.filter(b => b.id !== id));
+          setBlogs(blogs.filter((b) => b.id !== id))
         })
     }
   }
@@ -196,11 +197,11 @@ const App = () => {
         </div>
       }
 
-      {sortedBlogsByLikes.map((blog, index) =>
+      {sortedBlogsByLikes.map((blog) =>
         <Blog
           key={blog.id}
           blog={blog}
-          index={index}
+          user={user}
           updateLikes={() => handleLikes(blog.id)}
           deleteBlog={() => handleDelete(blog.id)}
         />

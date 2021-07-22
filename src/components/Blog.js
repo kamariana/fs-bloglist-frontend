@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, updateLikes, deleteBlog }) => {
+const Blog = ({ blog, user, updateLikes, deleteBlog }) => {
   const [blogVisible, setBlogVisible] = useState(false)
+  const userName = blog.user.name
+  const loggedInUserName = user.name
+
+  const showDelete = loggedInUserName === userName
+
 
   return (
     <div className="blog">
@@ -21,14 +26,16 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
       <div className={ blogVisible ? 'open' : 'close' }>
         {blog.url} <br />
         Likes {blog.likes} <br />
-        {/* {blog.user.name} */}
+        {userName}
         <div className="blog__footer">
           <button className="btn btn--like" onClick={updateLikes}>
           Like
           </button>
-          <button className="btn" onClick={deleteBlog}>
-          Delete
-          </button>
+          {showDelete && (
+            <button className="btn" onClick={deleteBlog}>
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </div>
