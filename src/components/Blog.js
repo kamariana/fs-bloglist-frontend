@@ -2,23 +2,20 @@ import React, { useState } from 'react'
 
 const Blog = ({ blog, user, updateLikes, deleteBlog }) => {
   const [blogVisible, setBlogVisible] = useState(false)
-  const userName = blog.user.name
-  const loggedInUserName = user.name
 
-  const showDelete = loggedInUserName === userName
-
+  const showDeleteButton = user === null
+    ? ''
+    : user.name === blog.user.name
 
   return (
     <div className="blog">
       <div className="blog__summary">
-        <div>
-          <h2 className="blog__title">
-            {blog.title}
-          </h2>
-          <span className="blog__sub-title">
-            {blog.author}
-          </span>
-        </div>
+        <h2 className="blog__title">
+          {blog.title}
+        </h2>
+        <span className="blog__sub-title">
+          {blog.author}
+        </span>
         <button className="btn btn--show" onClick={() => setBlogVisible(!blogVisible)}>
           {blogVisible ? 'Hide' : 'View'}
         </button>
@@ -26,13 +23,13 @@ const Blog = ({ blog, user, updateLikes, deleteBlog }) => {
       <div className={ blogVisible ? 'open' : 'close' }>
         {blog.url} <br />
         Likes {blog.likes} <br />
-        {userName}
+        {blog.user.name}
         <div className="blog__footer">
           <button className="btn btn--like" onClick={updateLikes}>
-          Like
+            Like
           </button>
-          {showDelete && (
-            <button className="btn" onClick={deleteBlog}>
+          {showDeleteButton && (
+            <button className="btn btn--delete" onClick={deleteBlog}>
               Delete
             </button>
           )}
