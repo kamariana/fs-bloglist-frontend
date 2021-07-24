@@ -46,6 +46,10 @@ body {
     color: #666;
 }
 
+.blog__likes {
+    display: block;
+}
+
 .blog__footer {
     display: flex;
     gap: 1rem;

@@ -21,9 +21,9 @@ const Blog = ({ blog, user, updateLikes, deleteBlog }) => {
         </button>
       </div>
       <div className={ blogVisible ? 'open' : 'close' }>
-        {blog.url} <br />
-        Likes {blog.likes} <br />
-        {blog.user.name}
+        <span>{blog.url}</span>
+        <span className="blog__likes">Likes {blog.likes}</span>
+        <span>{blog.user.name}</span>
         <div className="blog__footer">
           <button className="btn btn--like" onClick={updateLikes}>
             Like

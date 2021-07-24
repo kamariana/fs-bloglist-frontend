@@ -99,7 +99,8 @@ describe('Blog app', function() {
       cy.createBlog({
         title: 'I am not your Yoko Ono',
         author: 'Jane Yang',
-        url: 'https://janeyang.org/2021/04/13/in-search-of-dignity-at-work/'
+        url: 'https://janeyang.org/2021/04/13/in-search-of-dignity-at-work/',
+        likes: 10
       })
       cy.login({
         username: 'faalisco',
@@ -108,17 +109,20 @@ describe('Blog app', function() {
       cy.createBlog({
         title: 'Start Your Journey Through The Quran\'s Language',
         author: 'Norman Ali Khan',
-        url: 'https://dream.bayyinahtv.com/'
+        url: 'https://dream.bayyinahtv.com/',
+        likes: 100
       })
       cy.createBlog({
         title: 'University of the People Reviews: What it\'s Like to Study at UoPeople',
         author: 'U of People',
-        url: 'https://www.uopeople.edu/student-reviews/'
+        url: 'https://www.uopeople.edu/student-reviews/',
+        likes: 5
       })
       cy.createBlog({
         title: 'Quotes for Software Engineers',
         author: 'Damith C. Rajapakse',
-        url: 'https://www.comp.nus.edu.sg/~damithch/pages/SE-quotes.htm'
+        url: 'https://www.comp.nus.edu.sg/~damithch/pages/SE-quotes.htm',
+        likes: 35
       })
 
       cy.contains('Login').click()
@@ -150,6 +154,13 @@ describe('Blog app', function() {
         .should('not.contain', 'Delete')
 
       cy.get('@showButton').click()
+    })
+
+    it('checks that the blogs are ordered according to likes with the blog with the most likes being first.', function() {
+      cy.get('.btn--show').click({ multiple: true })
+
+      cy.get('.blog__likes').first().should('have.text', 'Likes 100')
+      cy.get('.blog__likes').last().should('have.text', 'Likes 5')
     })
   })
 
